@@ -1,95 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlogPost</title>
-    <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Post — Inkwell</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <form action="">
-        <label for="title">Post Title: </label>
-        <input type="title" placeholder="Enter your Post Title" required><br><br>
-        <label for="category">Category: </label>
-        <select name="topic" id="topic" required>
-            <option value="">Select your topic of intrest</option>
-            <option value="cars">Cars</option>
-            <option value="Food and drinks">Food and drinks</option>
-  <option value="Lifestyle">Lifestyle</option>
-  <option value="Culture">Culture</option>
-  <option value="Business">Business</option>
-  <option value="Finance">Finance</option>
-  <option value="Technology">Technology</option>
-  <option value="Sports">Sports</option>
-  <option value="art">Art</option>
-  <option value="Music">Music</option>
-  <option value="health and fitness">Health and fitness</option>
-  <option value="Spirituality">Spirituality</option>
-  <option value="Fiction">Fiction</option>
-  <option value="Other">Other</option>
-  </select><br><br>
-        <label for="image">Freatured Image: </label>
-        <input type="file" id="Featured Image" accept="image/*" ><br><br>
-        <label for="body">Message: </label>
- <textarea name="body" id="content" cols="30" rows="10" placeholder="Enter your content" required></textarea><br><br>
-<style>
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
 
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+  <header>
+    <a href="signup.html" class="wordmark">Ink<span>well</span></a>
+    <span class="tagline">Your words, your world</span>
+  </header>
 
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: 0.4s;
-  border-radius: 34px;
-}
+  <main class="wide">
+    <section class="card-header">
+      <h1>Write a new post</h1>
+      <p>Share your ideas with the Inkwell community.</p>
+    </section>
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: rgb(255, 255, 255);
-  transition: 0.4s;
-  border-radius: 50%;
-}
+    <form action="submit.html" method="get">
 
-input:checked + .slider {
-  background-color: #2196F3;
-}
+      <fieldset>
+        <label for="post-title">Post Title</label>
+        <input type="text" id="post-title" name="title"
+               placeholder="Give your post a compelling title…" required />
+      </fieldset>
 
-input:checked + .slider:before {
-  transform: translateX(26px);
-}
-</style>
-<label for="draft">Draft </label>
-<label class="switch">
-  <input type="checkbox">
-  <span class="slider"></span>
-</label>
-<label for="publish"> Publish</label><br><br>
-<label for="allow commenting">Allow Commenting</label>
-<input type="checkbox" checked required><br><br>
-<label for="date">Publish Date: </label>
-<input type="datetime-local" required><br><br>
-<button type="button">Submit Post</button>
+      <fieldset>
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+          <option value="">Select a topic…</option>
+          <option value="cars">Cars</option>
+          <option value="food-drinks">Food &amp; Drinks</option>
+          <option value="lifestyle">Lifestyle</option>
+          <option value="culture">Culture</option>
+          <option value="business">Business</option>
+          <option value="finance">Finance</option>
+          <option value="technology">Technology</option>
+          <option value="sports">Sports</option>
+          <option value="art">Art</option>
+          <option value="music">Music</option>
+          <option value="health-fitness">Health &amp; Fitness</option>
+          <option value="spirituality">Spirituality</option>
+          <option value="fiction">Fiction</option>
+          <option value="other">Other</option>
+        </select>
+      </fieldset>
+
+      <fieldset>
+        <label for="featured-image">Featured Image</label>
+        <input type="file" id="featured-image" name="featured_image" accept="image/*" />
+      </fieldset>
+
+      <fieldset>
+        <label for="content">Post Content</label>
+        <textarea id="content" name="content"
+                  placeholder="Write your story here…" required></textarea>
+      </fieldset>
+
+      <hr />
+
+      <p class="toggle-row">
+        <label for="publish-toggle" id="label-draft" class="active">Draft</label>
+        <label class="switch">
+          <input type="checkbox" id="publish-toggle" name="published"
+                 onchange="document.getElementById('label-draft').classList.toggle('active',!this.checked);
+                           document.getElementById('label-publish').classList.toggle('active',this.checked);" />
+          <span class="slider"></span>
+        </label>
+        <label for="publish-toggle" id="label-publish">Publish</label>
+      </p>
+
+      <p class="check-row">
+        <input type="checkbox" id="allow-comments" name="allow_comments" checked />
+        <label for="allow-comments">Allow commenting on this post</label>
+      </p>
+
+      <fieldset>
+        <label for="publish-date">Publish Date &amp; Time</label>
+        <input type="datetime-local" id="publish-date" name="publish_date" />
+      </fieldset>
+
+      <button type="submit">Submit Post →</button>
     </form>
-     <p><small><a href="signup.html" onclick="showSignUp(); return false;">← Back to Sign Up</a> | <a href="signin.html" onclick="showSignIn(); return false;">Sign In instead</a></small></p>
+  </main>
+
+  <footer>
+    <p>
+      <a href="signup.html">← Back to Sign Up</a>
+      &nbsp;·&nbsp;
+      <a href="signin.html">Sign In instead</a>
+    </p>
+  </footer>
+
 </body>
 </html>

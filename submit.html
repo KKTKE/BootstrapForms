@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post Submitted — Inkwell</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Confirmation-specific styles ── */
+    main.wide { max-width: 680px; }
+
+    /* Success badge */
+    figure.success-icon {
+      margin: 0 0 28px 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    figure.success-icon mark {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--rust));
+      flex-shrink: 0;
+    }
+    figure.success-icon mark svg {
+      width: 26px;
+      height: 26px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    figure.success-icon figcaption h1 {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      line-height: 1.2;
+    }
+    figure.success-icon figcaption p {
+      font-size: .85rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* Summary card */
+    article.summary {
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+
+    /* Status bar */
+    header.status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: var(--paper);
+      border-bottom: 1px solid var(--border);
+      margin: 0;
+    }
+    header.status-bar text-align { text-align: left; }
+    header.status-bar small {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    span.badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+    span.badge.published {
+      background: rgba(21, 255, 0, 0.15);
+      color: #00ff00;
+    }
+    span.badge.draft {
+      background: rgba(0, 255, 21, 0.12);
+      color: var(--muted);
+    }
+    span.badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      display: inline-block;
+    }
+
+    /* Post content area */
+    section.post-body {
+      padding: 24px 24px 20px;
+    }
+    section.post-body h2 {
+      font-family: var(--font-serif);
+      font-size: 1.55rem;
+      line-height: 1.25;
+      margin-bottom: 14px;
+      color: var(--ink);
+      word-break: break-word;
+    }
+    section.post-body p.content-preview {
+      font-size: .9rem;
+      line-height: 1.75;
+      color: #15ff00;
+      margin-bottom: 20px;
+      word-break: break-word;
+    }
+    section.post-body p.content-preview em {
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* Meta grid */
+    dl.meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 20px;
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+    }
+    dl.meta dt {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+    dl.meta dd {
+      font-size: .88rem;
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    /* Commenting notice */
+    aside.commenting {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      background: rgba(13, 255, 0, 0.07);
+      border-top: 1px solid var(--border);
+      font-size: .82rem;
+      color: var(--muted);
+    }
+    aside.commenting svg {
+      width: 16px; height: 16px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      flex-shrink: 0;
+    }
+
+    /* Action buttons */
+    nav.actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    nav.actions a {
+      display: block;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: .88rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: .02em;
+      transition: opacity .2s, transform .15s;
+    }
+    nav.actions a:hover { opacity: .85; transform: translateY(-1px); }
+    nav.actions a.btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--rust));
+      color: #fff;
+      box-shadow: 0 3px 12px rgba(184,92,56,.28);
+    }
+    nav.actions a.btn-secondary {
+      background: var(--paper);
+      border: 1.5px solid var(--border);
+      color: var(--ink);
+    }
+
+    a.btn-full {
+      display: block;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: .88rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--muted);
+      border: 1.5px solid var(--border);
+      background: var(--paper);
+      transition: opacity .2s;
+    }
+    a.btn-full:hover { opacity: .75; }
+
+    /* Empty-state placeholder title */
+    span.placeholder { color: var(--muted); font-style: italic; font-family: var(--font-serif); }
+
+    @media (max-width: 560px) {
+      nav.actions { grid-template-columns: 1fr; }
+      dl.meta { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="signup.html" class="wordmark">Ink<span>well</span></a>
+    <span class="tagline">Your words, your world</span>
+  </header>
+
+  <main class="wide">
+
+    <!-- Success heading -->
+    <figure class="success-icon">
+      <mark>
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </mark>
+      <figcaption>
+        <h1>Post submitted!</h1>
+        <p>Here's a summary of what was sent.</p>
+      </figcaption>
+    </figure>
+
+    <!-- Summary card -->
+    <article class="summary" id="summary-card">
+
+      <header class="status-bar">
+        <small>Post summary</small>
+        <span class="badge" id="status-badge">—</span>
+      </header>
+
+      <section class="post-body">
+        <h2 id="summary-title"><span class="placeholder">Untitled post</span></h2>
+        <p class="content-preview" id="summary-content">
+          <em>No content provided.</em>
+        </p>
+
+        <dl class="meta">
+          <dt>Category</dt>
+          <dd id="meta-category">—</dd>
+
+          <dt>Publish Date</dt>
+          <dd id="meta-date">—</dd>
+
+          <dt>Featured Image</dt>
+          <dd id="meta-image">—</dd>
+
+          <dt>Submitted</dt>
+          <dd id="meta-submitted">—</dd>
+        </dl>
+      </section>
+
+      <aside class="commenting" id="commenting-notice">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span id="commenting-text">Commenting status unknown.</span>
+      </aside>
+
+    </article>
+
+    <!-- Action buttons -->
+    <nav class="actions">
+      <a href="blogpost.html" class="btn-secondary">✏️ &nbsp;Edit Post</a>
+      <a href="blogpost.html" class="btn-primary">＋ &nbsp;New Post</a>
+    </nav>
+    <a href="signin.html" class="btn-full">← Back to Sign In</a>
+
+  </main>
+
+  <footer>
+    <p>
+      <a href="signup.html">Sign Up</a>
+      &nbsp;·&nbsp;
+      <a href="signin.html">Sign In</a>
+      &nbsp;·&nbsp;
+      <a href="blogpost.html">Write</a>
+    </p>
+  </footer>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+
+    /* ── Title ── */
+    const titleEl = document.getElementById('summary-title');
+    const title   = params.get('title') || '';
+    titleEl.innerHTML = title
+      ? escHtml(title)
+      : '<span class="placeholder">Untitled post</span>';
+
+    /* ── Content preview (max 300 chars) ── */
+    const contentEl = document.getElementById('summary-content');
+    const content   = params.get('content') || '';
+    if (content) {
+      const preview = content.length > 300
+        ? escHtml(content.slice(0, 300)) + '…'
+        : escHtml(content);
+      contentEl.innerHTML = preview;
+    }
+
+    /* ── Category ── */
+    const catMap = {
+      'cars':'Cars','food-drinks':'Food & Drinks','lifestyle':'Lifestyle',
+      'culture':'Culture','business':'Business','finance':'Finance',
+      'technology':'Technology','sports':'Sports','art':'Art','music':'Music',
+      'health-fitness':'Health & Fitness','spirituality':'Spirituality',
+      'fiction':'Fiction','other':'Other'
+    };
+    const cat = params.get('category') || '';
+    document.getElementById('meta-category').textContent = catMap[cat] || cat || '—';
+
+    /* ── Publish date ── */
+    const rawDate = params.get('publish_date') || '';
+    const dateEl  = document.getElementById('meta-date');
+    if (rawDate) {
+      const d = new Date(rawDate);
+      dateEl.textContent = d.toLocaleString(undefined, {
+        dateStyle: 'medium', timeStyle: 'short'
+      });
+    } else {
+      dateEl.textContent = 'Not scheduled';
+    }
+
+    /* ── Published / Draft toggle ── */
+    const isPublished = params.get('published') === 'on';
+    const badge       = document.getElementById('status-badge');
+    badge.textContent = isPublished ? 'Published' : 'Draft';
+    badge.classList.add(isPublished ? 'published' : 'draft');
+
+    /* ── Commenting ── */
+    const commenting  = params.get('allow_comments') === 'on';
+    document.getElementById('commenting-text').textContent = commenting
+      ? 'Commenting is enabled on this post.'
+      : 'Commenting is disabled on this post.';
+
+    /* ── Featured image ── */
+    document.getElementById('meta-image').textContent =
+      params.get('featured_image') || 'None uploaded';
+
+    /* ── Submitted time ── */
+    document.getElementById('meta-submitted').textContent =
+      new Date().toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+
+    /* ── Helper ── */
+    function escHtml(str) {
+      return str
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+  </script>
+
+</body>
+</html>
